@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.After;
@@ -35,7 +36,7 @@ public class Otimizando_Teste_CampoTreinamento {
 	
 	@Test
 	public void testTextField() {
-		dsl.send_text("elementosForm:nome", "Teste de Escrita");
+		dsl.send_textId("elementosForm:nome", "Teste de Escrita");
 		Assert.assertEquals("Teste de Escrita", dsl.get_value("elementosForm:nome"));	
 	}
 	
@@ -43,7 +44,7 @@ public class Otimizando_Teste_CampoTreinamento {
 	
 	@Test
 	public void deveInteragirComTextArea() {
-		dsl.send_text("elementosForm:sugestoes", "teste_2");
+		dsl.send_textId("elementosForm:sugestoes", "teste_2");
 		Assert.assertEquals("teste_2", dsl.get_value("elementosForm:sugestoes"));
 	}
 	
@@ -60,7 +61,7 @@ public class Otimizando_Teste_CampoTreinamento {
 	@Test
 	public void deveInteragirComCheckBox() {		
 		driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
-		Assert.assertTrue(dsl.check_selected("elementosForm:comidaFavorita:0"));
+		Assert.assertTrue(dsl.is_Check_Seletected("elementosForm:comidaFavorita:0"));
 	}
 	
 	
@@ -68,47 +69,32 @@ public class Otimizando_Teste_CampoTreinamento {
 	@Test
 	public void deveInteragirComCombo() {		
 		dsl.select_combo_ByVisibleText("elementosForm:escolaridade", "2o grau completo");
-		Assert.assertEquals("2o grau completo", dsl.getValue_combo("elementosForm:escolaridade"));
+		Assert.assertEquals("2o grau completo", dsl.get_Selected_Value_combo("elementosForm:escolaridade"));
 	}
 	
 	
 	
 	@Test
 	public void DeveVerificarValoresCombo() {
-		
-		WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
-		Select combo = new Select(element);
-		List<WebElement> options = combo.getOptions();
-		Assert.assertEquals(8, options.size());
-		
-		boolean encontrou = false;
-		for(WebElement option: options) {
-			if(option.getText().equals("Doutorado")) {
-				encontrou = true;
-				break;
-			}
-		}
-		
-		Assert.assertTrue(encontrou);
+		Assert.assertEquals(8, dsl.get_qtd_opt_combo("elementosForm:escolaridade"));
+		Assert.assertTrue(dsl.check_opt_combo("elementosForm:escolaridade", "Doutorado"));
 	}
 	
 	
 	
 	@Test
 	public void DeveVerificarValoresComboMultiplo() {
-	
-		WebElement element = driver.findElement(By.id("elementosForm:esportes"));
-		Select combo = new Select(element);
-//		combo.selectByVisibleText("Natacao");
-//		combo.selectByVisibleText("Futebol");
-//		combo.selectByVisibleText("Corrida");
-		List<WebElement> options = combo.getOptions();
-		for (WebElement option: options) {
-			combo.selectByVisibleText(option.getText());
-		}
-						
-		List<WebElement> allSelectedOptions = combo.getAllSelectedOptions();
-		Assert.assertEquals(options.size(), allSelectedOptions.size());
+		dsl.select_combo_ByVisibleText("elementosForm:esportes", "Natacao");
+		dsl.select_combo_ByVisibleText("elementosForm:esportes", "Corrida");
+		dsl.select_combo_ByVisibleText("elementosForm:esportes", "O que eh esporte?");	
+		 
+		List<String> opt_selecionadas = dsl.get_AllSelectedValues_Combo("elementosForm:esportes");
+		Assert.assertEquals(3, opt_selecionadas.size());
+		
+		dsl.deselect_combo_ByVisibleText("elementosForm:esportes", "Corrida");
+		opt_selecionadas = dsl.get_AllSelectedValues_Combo("elementosForm:esportes");
+		Assert.assertEquals(2, opt_selecionadas.size());
+		Assert.assertTrue(opt_selecionadas.containsAll(Arrays.asList("Natacao", "O que eh esporte?")));
 	}
 	
 	
@@ -116,8 +102,7 @@ public class Otimizando_Teste_CampoTreinamento {
 	@Test
 	public void DeveInteragirComBotao() {
 		dsl.click_Button("buttonSimple");
-		WebElement botao = driver.findElement(By.id("buttonSimple"));
-		Assert.assertEquals("Obrigado!", botao.getAttribute("value"));
+		Assert.assertEquals("Obrigado!", dsl.get_Value_Element("buttonSimple"));
 	}
 	
 	
