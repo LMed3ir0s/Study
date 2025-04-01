@@ -1,10 +1,11 @@
 import sys
 import os
 import copy
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from Desafio_package import (
     produtos, preco_aumentar, imprimir_lista, novo_produto, novos_produtos, ord_nome_decrescente,
-    novo_produto_ord_nome, novos_produtos
+    novos_produtos, ord_nome_crescente, ord_preco_crescente
     )
 
 
@@ -33,13 +34,15 @@ print()
 
 # 4)Gere produtos_ordenados_por_nome por deep copy
 print("# 4)Gere produtos_ordenados_por_nome por deep copy")
-novo_produto_ord_nome('PRODUTO NOVO 02', 77.77)
+novo_produto('PRODUTO NOVO 02', 77.77)
+ord_nome_crescente(novos_produtos)
 imprimir_lista(novos_produtos)
 print()
 
-# # 5)Ordene os produtos por preco crescente
+# 5)Ordene os produtos por preco crescente
 # print("# 5)Ordene os produtos por preco crescente")
-# imprimir_lista()
+# ord_preco_crescente(novos_produtos)
+# imprimir_lista(novos_produtos)
 # print()
 
 # # 6)Gere produtos_ordenados_por_preco por deep copy

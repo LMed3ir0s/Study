@@ -40,7 +40,7 @@ def ordernar_nomecrescente(list):
 def ordernar_precocrescente(list):
     return sorted(list, key= lambda produto: produto['preco'])
 
-# 6)Gere produtos_ordenados_por_preco por deep copy (cópia profunda)
+# 6)Gere produtos_orreco denados_por_ppor deep copy (cópia profunda)
 n_prod_ord_preco = copy.deepcopy(produtos)
 def novo_produto_ordenado_preco(nome: str, preco: float):    
     novo_item = {'nome': nome, 'preco': preco}
