@@ -1,0 +1,78 @@
+# Criar o conteúdo do resumo em um arquivo .txt
+
+resumo = """
+✅ Resumo da Sessão: Sistema de Tarefas com Undo/Redo
+
+📌 O que já foi feito:
+1. Criamos funções para adicionar tarefas, desfazer (undo) e refazer (redo).
+2. Entendemos a lógica de como manipular listas para controlar o histórico de tarefas.
+3. Corrigimos erros com `nonlocal` e uso inadequado de `sep=\\n` no `print`.
+4. Implementamos uma função utilitária para exibir listas formatadas.
+
+🧠 Conceitos explicados:
+
+🔹 `_ = None` no parâmetro da função:
+- Usado quando a função precisa de um argumento, mas você não pretende usá-lo.
+- O `= None` permite chamar a função sem passar argumento.
+
+🔹 `if not list_undo:`:
+- Verifica se a lista está vazia.
+- Útil para decidir se há algo a desfazer/refazer.
+
+🔹 Lógica de undo:
+    last_state = list_undo.pop()
+    list_tasks.clear()
+    list_tasks.extend(last_state)
+- Remove o último estado salvo.
+- Limpa a lista atual.
+- Restaura o estado anterior.
+
+🔹 `mostrar_lista_formatada()`:
+Função criada para exibir tarefas com numeração:
+    def mostrar_lista_formatada(lista, titulo="Lista atual:"):
+        if not lista:
+            print("A lista está vazia.")
+            return
+        
+        print(titulo)
+        for i, task in enumerate(lista, start=1):
+            print(f"{i}. {task}")
+
+📦 Exemplo de uso da função mostrar_lista_formatada no task_undo:
+    def task_undo(_=None):
+        if not list_undo:
+            print("Nada para desfazer.")
+            return
+        list_redo.append(copy.deepcopy(list_tasks))
+        last_state = list_undo.pop()
+        list_tasks.clear()
+        list_tasks.extend(last_state)
+        print("Tarefa desfeita.")
+        mostrar_lista_formatada(list_tasks)
+
+🧭 Próximos passos sugeridos:
+
+🔸 1. Criar um menu interativo no terminal:
+    Digite uma opção:
+    [a] Adicionar tarefa
+    [u] Desfazer
+    [r] Refazer
+    [l] Listar tarefas
+    [s] Sair
+
+🔸 2. Evoluir para uma interface gráfica (GUI):
+- Usar Tkinter ou PySide6.
+- Botões para cada ação: “Adicionar”, “Desfazer”, “Refazer”, etc.
+
+🔸 3. Salvar as tarefas em arquivo:
+- Salvar as listas em .json ou .txt para manter entre sessões.
+
+📍 Quando voltar, posso te ajudar a continuar de onde parou. Só me chamar!
+"""
+
+# Salvar o conteúdo em um arquivo
+file_path = "/mnt/data/Resumo_Sistema_Tarefas_Undo_Redo.txt"
+with open(file_path, "w", encoding="utf-8") as file:
+    file.write(resumo)
+
+file_path
